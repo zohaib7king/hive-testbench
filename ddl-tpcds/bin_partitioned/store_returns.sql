@@ -1,4 +1,4 @@
-create database if not exists ${DB};
+create database if not exists ${DB} location ${S3LOCATION}/${DB};
 use ${DB};
 
 drop table if exists store_returns;
@@ -29,7 +29,7 @@ partitioned by (sr_returned_date_sk bigint)
 stored as ${FILE};
 
 from ${SOURCE}.store_returns sr
-insert overwrite table store_returns partition (sr_returned_date_sk) 
+insert overwrite table store_returns partition (sr_returned_date_sk)
 select
         sr.sr_return_time_sk,
         sr.sr_item_sk,
@@ -52,7 +52,7 @@ select
         sr.sr_net_loss,
         sr.sr_returned_date_sk
         where sr.sr_returned_date_sk is not null
-insert overwrite table store_returns partition (sr_returned_date_sk) 
+insert overwrite table store_returns partition (sr_returned_date_sk)
 select
         sr.sr_return_time_sk,
         sr.sr_item_sk,

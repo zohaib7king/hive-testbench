@@ -1,4 +1,4 @@
-create database if not exists ${DB};
+create database if not exists ${DB} location ${S3LOCATION}/${DB};
 use ${DB};
 
 drop table if exists web_returns;
@@ -87,5 +87,5 @@ select
         wr.wr_net_loss,
 		wr.wr_returned_date_sk
         where wr.wr_returned_date_sk is null
-        sort by wr.wr_returned_date_sk 
+        sort by wr.wr_returned_date_sk
 ;

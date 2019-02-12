@@ -1,42 +1,42 @@
-create database if not exists ${DB};
+create database if not exists ${DB} location ${S3LOCATION}/${DB};
 use ${DB};
 
 drop table if exists call_center;
 
 create external table call_center(
-      cc_call_center_sk         bigint               
-,     cc_call_center_id         string              
-,     cc_rec_start_date        string                         
-,     cc_rec_end_date          string                         
-,     cc_closed_date_sk         bigint                       
-,     cc_open_date_sk           bigint                       
-,     cc_name                   string                   
-,     cc_class                  string                   
-,     cc_employees              int                       
-,     cc_sq_ft                  int                       
-,     cc_hours                  string                      
-,     cc_manager                string                   
-,     cc_mkt_id                 int                       
-,     cc_mkt_class              string                      
-,     cc_mkt_desc               string                  
-,     cc_market_manager         string                   
-,     cc_division               int                       
-,     cc_division_name          string                   
-,     cc_company                int                       
-,     cc_company_name           string                      
-,     cc_street_number          string                      
-,     cc_street_name            string                   
-,     cc_street_type            string                      
-,     cc_suite_number           string                      
-,     cc_city                   string                   
-,     cc_county                 string                   
-,     cc_state                  string                       
-,     cc_zip                    string                      
-,     cc_country                string                   
-,     cc_gmt_offset             double                  
+      cc_call_center_sk         bigint
+,     cc_call_center_id         string
+,     cc_rec_start_date        string
+,     cc_rec_end_date          string
+,     cc_closed_date_sk         bigint
+,     cc_open_date_sk           bigint
+,     cc_name                   string
+,     cc_class                  string
+,     cc_employees              int
+,     cc_sq_ft                  int
+,     cc_hours                  string
+,     cc_manager                string
+,     cc_mkt_id                 int
+,     cc_mkt_class              string
+,     cc_mkt_desc               string
+,     cc_market_manager         string
+,     cc_division               int
+,     cc_division_name          string
+,     cc_company                int
+,     cc_company_name           string
+,     cc_street_number          string
+,     cc_street_name            string
+,     cc_street_type            string
+,     cc_suite_number           string
+,     cc_city                   string
+,     cc_county                 string
+,     cc_state                  string
+,     cc_zip                    string
+,     cc_country                string
+,     cc_gmt_offset             double
 ,     cc_tax_percentage         double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/call_center';
 create database if not exists ${DB};
 use ${DB};
@@ -44,17 +44,17 @@ use ${DB};
 drop table if exists catalog_page;
 
 create external table catalog_page(
-      cp_catalog_page_sk        bigint               
-,     cp_catalog_page_id        string              
-,     cp_start_date_sk          bigint                       
-,     cp_end_date_sk            bigint                       
-,     cp_department             string                   
-,     cp_catalog_number         int                       
-,     cp_catalog_page_number    int                       
-,     cp_description            string                  
+      cp_catalog_page_sk        bigint
+,     cp_catalog_page_id        string
+,     cp_start_date_sk          bigint
+,     cp_end_date_sk            bigint
+,     cp_department             string
+,     cp_catalog_number         int
+,     cp_catalog_page_number    int
+,     cp_description            string
 ,     cp_type                   string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/catalog_page';
 create database if not exists ${DB};
 use ${DB};
@@ -91,7 +91,7 @@ create external table catalog_returns
     cr_store_credit           double,
     cr_net_loss               double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/catalog_returns';
 create database if not exists ${DB};
 use ${DB};
@@ -135,7 +135,7 @@ create external table catalog_sales
     cs_net_paid_inc_ship_tax  double,
     cs_net_profit             double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/catalog_sales';
 create database if not exists ${DB};
 use ${DB};
@@ -158,7 +158,7 @@ create external table customer_address
     ca_gmt_offset             double,
     ca_location_type          string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/customer_address';
 create database if not exists ${DB};
 use ${DB};
@@ -175,9 +175,9 @@ create external table customer_demographics
     cd_credit_rating          string,
     cd_dep_count              int,
     cd_dep_employed_count     int,
-    cd_dep_college_count      int 
+    cd_dep_college_count      int
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/customer_demographics';
 create database if not exists ${DB};
 use ${DB};
@@ -205,7 +205,7 @@ create external table customer
     c_email_address           string,
     c_last_review_date        string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/customer';
 create database if not exists ${DB};
 use ${DB};
@@ -241,9 +241,9 @@ create external table date_dim
     d_current_week            string,
     d_current_month           string,
     d_current_quarter         string,
-    d_current_year            string 
+    d_current_year            string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/date_dim';
 create database if not exists ${DB};
 use ${DB};
@@ -258,7 +258,7 @@ create external table household_demographics
     hd_dep_count              int,
     hd_vehicle_count          int
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/household_demographics';
 create database if not exists ${DB};
 use ${DB};
@@ -266,11 +266,11 @@ use ${DB};
 drop table if exists income_band;
 
 create external table income_band(
-      ib_income_band_sk         bigint               
-,     ib_lower_bound            int                       
+      ib_income_band_sk         bigint
+,     ib_lower_bound            int
 ,     ib_upper_bound            int
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/income_band';
 create database if not exists ${DB};
 use ${DB};
@@ -284,7 +284,7 @@ create external table inventory
     inv_warehouse_sk		bigint,
     inv_quantity_on_hand	int
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/inventory';
 create database if not exists ${DB};
 use ${DB};
@@ -316,7 +316,7 @@ create external table item
     i_manager_id              int,
     i_product_name            string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/item';
 create database if not exists ${DB};
 use ${DB};
@@ -343,9 +343,9 @@ create external table promotion
     p_channel_demo            string,
     p_channel_details         string,
     p_purpose                 string,
-    p_discount_active         string 
+    p_discount_active         string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/promotion';
 create database if not exists ${DB};
 use ${DB};
@@ -353,11 +353,11 @@ use ${DB};
 drop table if exists reason;
 
 create external table reason(
-      r_reason_sk               bigint               
-,     r_reason_id               string              
-,     r_reason_desc             string                
+      r_reason_sk               bigint
+,     r_reason_id               string
+,     r_reason_desc             string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/reason';
 create database if not exists ${DB};
 use ${DB};
@@ -365,14 +365,14 @@ use ${DB};
 drop table if exists ship_mode;
 
 create external table ship_mode(
-      sm_ship_mode_sk           bigint               
-,     sm_ship_mode_id           string              
-,     sm_type                   string                      
-,     sm_code                   string                      
-,     sm_carrier                string                      
-,     sm_contract               string                      
+      sm_ship_mode_sk           bigint
+,     sm_ship_mode_id           string
+,     sm_type                   string
+,     sm_code                   string
+,     sm_carrier                string
+,     sm_contract               string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/ship_mode';
 create database if not exists ${DB};
 use ${DB};
@@ -400,9 +400,9 @@ create external table store_returns
     sr_refunded_cash          double,
     sr_reversed_charge        double,
     sr_store_credit           double,
-    sr_net_loss               double             
+    sr_net_loss               double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/store_returns';
 create database if not exists ${DB};
 use ${DB};
@@ -433,9 +433,9 @@ create external table store_sales
     ss_coupon_amt             double,
     ss_net_paid               double,
     ss_net_paid_inc_tax       double,
-    ss_net_profit             double                  
+    ss_net_profit             double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/store_sales';
 create database if not exists ${DB};
 use ${DB};
@@ -472,9 +472,9 @@ create external table store
     s_zip                     string,
     s_country                 string,
     s_gmt_offset              double,
-    s_tax_precentage          double                  
+    s_tax_precentage          double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/store';
 create database if not exists ${DB};
 use ${DB};
@@ -494,7 +494,7 @@ create external table time_dim
     t_sub_shift               string,
     t_meal_time               string
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/time_dim';
 create database if not exists ${DB};
 use ${DB};
@@ -502,22 +502,22 @@ use ${DB};
 drop table if exists warehouse;
 
 create external table warehouse(
-      w_warehouse_sk            bigint               
-,     w_warehouse_id            string              
-,     w_warehouse_name          string                   
-,     w_warehouse_sq_ft         int                       
-,     w_street_number           string                      
-,     w_street_name             string                   
-,     w_street_type             string                      
-,     w_suite_number            string                      
-,     w_city                    string                   
-,     w_county                  string                   
-,     w_state                   string                       
-,     w_zip                     string                      
-,     w_country                 string                   
-,     w_gmt_offset              double                  
+      w_warehouse_sk            bigint
+,     w_warehouse_id            string
+,     w_warehouse_name          string
+,     w_warehouse_sq_ft         int
+,     w_street_number           string
+,     w_street_name             string
+,     w_street_type             string
+,     w_suite_number            string
+,     w_city                    string
+,     w_county                  string
+,     w_state                   string
+,     w_zip                     string
+,     w_country                 string
+,     w_gmt_offset              double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/warehouse';
 create database if not exists ${DB};
 use ${DB};
@@ -525,22 +525,22 @@ use ${DB};
 drop table if exists web_page;
 
 create external table web_page(
-      wp_web_page_sk            bigint               
-,     wp_web_page_id            string              
-,     wp_rec_start_date        string                         
-,     wp_rec_end_date          string                         
-,     wp_creation_date_sk       bigint                       
-,     wp_access_date_sk         bigint                       
-,     wp_autogen_flag           string                       
-,     wp_customer_sk            bigint                       
-,     wp_url                    string                  
-,     wp_type                   string                      
-,     wp_char_count             int                       
-,     wp_link_count             int                       
-,     wp_image_count            int                       
+      wp_web_page_sk            bigint
+,     wp_web_page_id            string
+,     wp_rec_start_date        string
+,     wp_rec_end_date          string
+,     wp_creation_date_sk       bigint
+,     wp_access_date_sk         bigint
+,     wp_autogen_flag           string
+,     wp_customer_sk            bigint
+,     wp_url                    string
+,     wp_type                   string
+,     wp_char_count             int
+,     wp_link_count             int
+,     wp_image_count            int
 ,     wp_max_ad_count           int
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/web_page';
 create database if not exists ${DB};
 use ${DB};
@@ -574,7 +574,7 @@ create external table web_returns
     wr_account_credit         double,
     wr_net_loss               double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/web_returns';
 create database if not exists ${DB};
 use ${DB};
@@ -618,7 +618,7 @@ create external table web_sales
     ws_net_paid_inc_ship_tax  double,
     ws_net_profit             double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/web_sales';
 create database if not exists ${DB};
 use ${DB};
@@ -654,5 +654,5 @@ create external table web_site
     web_gmt_offset        double,
     web_tax_percentage    double
 )
-row format delimited fields terminated by '|' 
+row format delimited fields terminated by '|'
 location '${LOCATION}/web_site';
