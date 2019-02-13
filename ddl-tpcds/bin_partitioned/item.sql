@@ -1,4 +1,4 @@
-create database if not exists ${DB} location ${S3LOCATION};
+create database if not exists ${DB} location 's3://vg-nbs-hive/hive/tpcds';
 use ${DB};
 
 drop table if exists item;
