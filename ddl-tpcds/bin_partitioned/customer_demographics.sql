@@ -1,4 +1,4 @@
-create database if not exists ${DB} location ${S3LOCATION}/${DB};
+create database if not exists ${DB} location ${S3LOCATION};
 use ${DB};
 
 drop table if exists customer_demographics;
