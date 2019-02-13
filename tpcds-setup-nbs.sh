@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export DEBUG_SCRIPT=X
 function usage {
 	echo "Usage: tpcds-setup.sh scale_factor file_format location [temp_directory]"
 	exit 1
