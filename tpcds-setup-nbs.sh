@@ -1,7 +1,7 @@
 #!/bin/bash
 export DEBUG_SCRIPT=X
 function usage {
-	echo "Usage: tpcds-setup.sh scale_factor file_format location [temp_directory]"
+	echo "Usage: tpcds-setup.sh scale_factor file_format location db_name [temp_directory]"
 	exit 1
 }
 
@@ -31,7 +31,8 @@ FACTS="store_sales store_returns web_sales web_returns catalog_sales catalog_ret
 SCALE=$1
 FORMAT=$2
 LOCATION=$3
-DIR=$4
+NAME=$4
+DIR=$5
 if [ "X$BUCKET_DATA" != "X" ]; then
 	BUCKETS=13
 	RETURN_BUCKETS=13
@@ -76,7 +77,7 @@ HIVE="beeline -n hive -u 'jdbc:hive2://localhost:10000/' "
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
 echo "Loading text data into external tables."
-runcommand "$HIVE  -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql --hivevar DB=tpcds_text_${SCALE} --hivevar LOCATION=${LOCATION}"
+runcommand "$HIVE  -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql --hivevar DB=tpcds_text_${NAME} --hivevar LOCATION=${LOCATION}"
 
 # Create the partitioned and bucketed tables.
 # if [ "X$FORMAT" = "X" ]; then
@@ -102,7 +103,7 @@ REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo $
 for t in ${DIMS}
 do
 	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} --hivevar SOURCE=tpcds_text_${SCALE} \
+	    --hivevar DB=tpcds_bin_partitioned_${NAME} --hivevar SOURCE=tpcds_text_${SCALE} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar REDUCERS=${REDUCERS} \
 	    --hivevar FILE=${FORMAT} --hivevar LOCATION=${LOCATION}"
@@ -113,7 +114,7 @@ done
 for t in ${FACTS}
 do
 	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE} \
+	    --hivevar DB=tpcds_bin_partitioned_${NAME} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar SOURCE=tpcds_text_${SCALE} --hivevar BUCKETS=${BUCKETS} \
 	    --hivevar RETURN_BUCKETS=${RETURN_BUCKETS} --hivevar REDUCERS=${REDUCERS} --hivevar FILE=${FORMAT} \
@@ -126,6 +127,6 @@ make -j 1 -f $LOAD_FILE
 
 
 echo "Loading constraints"
-runcommand "$HIVE -f ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=tpcds_bin_partitioned_${FORMAT}_${SCALE}"
+runcommand "$HIVE -f ddl-tpcds/bin_partitioned/add_constraints.sql --hivevar DB=tpcds_bin_partitioned_${NAME}"
 
 echo "Data loaded into database ${DATABASE}."
