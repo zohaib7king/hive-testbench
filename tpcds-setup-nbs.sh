@@ -57,6 +57,7 @@ if [ $SCALE -eq 1 ]; then
 fi
 
 # Do the actual data load.
+hadoop fs -chown -R hive:hadoop /tmp
 hdfs dfs -mkdir -p ${DIR}
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
@@ -70,6 +71,7 @@ if [ $? -ne 0 ]; then
 fi
 
 hadoop fs -chmod -R 777  ${DIR}/${SCALE}
+
 
 echo "TPC-DS text data generation complete."
 
@@ -95,7 +97,7 @@ echo -e "all: ${DIMS} ${FACTS}" > $LOAD_FILE
 
 i=1
 total=24
-DATABASE=tpcds_bin_partitioned_${FORMAT}_${SCALE}
+DATABASE=tpcds_bin_partitioned_${NAME}
 MAX_REDUCERS=2500 # maximum number of useful reducers for any scale
 REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo ${SCALE})
 
