@@ -105,7 +105,7 @@ REDUCERS=$((test ${SCALE} -gt ${MAX_REDUCERS} && echo ${MAX_REDUCERS}) || echo $
 for t in ${DIMS}
 do
 	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
-	    --hivevar DB=tpcds_bin_partitioned_${NAME} --hivevar SOURCE=tpcds_text_${SCALE} \
+	    --hivevar DB=tpcds_bin_partitioned_${NAME} --hivevar SOURCE=tpcds_text_${NAME} \
             --hivevar SCALE=${SCALE} \
 	    --hivevar REDUCERS=${REDUCERS} \
 	    --hivevar FILE=${FORMAT} --hivevar LOCATION=${LOCATION}"
@@ -118,7 +118,7 @@ do
 	COMMAND="$HIVE  -i settings/load-partitioned.sql -f ddl-tpcds/bin_partitioned/${t}.sql \
 	    --hivevar DB=tpcds_bin_partitioned_${NAME} \
             --hivevar SCALE=${SCALE} \
-	    --hivevar SOURCE=tpcds_text_${SCALE} --hivevar BUCKETS=${BUCKETS} \
+	    --hivevar SOURCE=tpcds_text_${NAME} --hivevar BUCKETS=${BUCKETS} \
 	    --hivevar RETURN_BUCKETS=${RETURN_BUCKETS} --hivevar REDUCERS=${REDUCERS} --hivevar FILE=${FORMAT} \
 			--hivevar LOCATION=${LOCATION} "
 	echo -e "${t}:\n\t@$COMMAND $SILENCE && echo 'Optimizing table $t ($i/$total).'" >> $LOAD_FILE
