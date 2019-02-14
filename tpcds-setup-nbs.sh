@@ -57,7 +57,7 @@ if [ $SCALE -eq 1 ]; then
 fi
 
 # Do the actual data load.
-hadoop fs -chown -R hive:hadoop /tmp
+# hadoop fs -chown -R hive:hadoop /tmp
 hdfs dfs -mkdir -p ${DIR}
 hdfs dfs -ls ${DIR}/${SCALE} > /dev/null
 if [ $? -ne 0 ]; then
