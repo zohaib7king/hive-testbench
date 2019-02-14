@@ -79,7 +79,7 @@ HIVE="beeline -n hive -u 'jdbc:hive2://localhost:10000/' "
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
 echo "Loading text data into external tables."
-runcommand "$HIVE  -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql --hivevar DB=tpcds_text_${NAME} --hivevar LOCATION=${LOCATION}"
+runcommand "$HIVE  -i settings/load-flat.sql -f ddl-tpcds/text/alltables.sql --hivevar DB=tpcds_text_${NAME} --hivevar LOCATION=${DIR}/${SCALE}"
 
 # Create the partitioned and bucketed tables.
 # if [ "X$FORMAT" = "X" ]; then
